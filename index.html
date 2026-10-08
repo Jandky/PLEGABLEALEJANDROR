@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plegable Digital: Habilidades de Poder para el Liderazgo Policial</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #070d14;
+            --bg-card: rgba(12, 22, 34, 0.85);
+            --neon-green: #00FF66;
+            --neon-green-glow: rgba(0, 255, 102, 0.4);
+            --turqui-blue: #00E5FF;
+            --turqui-glow: rgba(0, 229, 255, 0.4);
+            --text-main: #f0f6fc;
+            --text-muted: #8b9bb4;
+            --border-panel: rgba(0, 229, 255, 0.25);
+            --border-accent: rgba(0, 255, 102, 0.3);
+            --danger: #ff3366;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            background-image:
+                radial-gradient(circle at 15% 20%, rgba(0, 229, 255, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 85% 80%, rgba(0, 255, 102, 0.08) 0%, transparent 40%),
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 30px 30px, 30px 30px;
+            color: var(--text-main);
+            font-family: 'Rajdhani', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 24px 16px;
+        }
+
+        /* BARRA SUPERIOR DE CONTROL */
+        header {
+            width: 100%;
+            max-width: 1240px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--bg-card);
+            border: 1px solid var(--border-panel);
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.15);
+            border-radius: 12px;
+            padding: 16px 24px;
+            margin-bottom: 24px;
+            backdrop-filter: blur(10px);
+        }
+
+        .badge-course {
+            display: inline-block;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--neon-green);
+            font-weight: 700;
+            border: 1px solid var(--neon-green);
+            padding: 4px 8px;
+            border-radius: 4px;
+            margin-bottom: 6px;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.4rem;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        h1 span {
+            color: var(--turqui-blue);
+            text-shadow: 0 0 10px var(--turqui-glow);
+        }
+
+        .docente-tag {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .docente-tag strong {
+            color: var(--neon-green);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .btn-action {
+            background: rgba(0, 229, 255, 0.1);
+            border: 1px solid var(--turqui-blue);
+            color: var(--turqui-blue);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .btn-action:hover,
+        .btn-action.active {
+            background: var(--turqui-blue);
+            color: #03080e;
+            box-shadow: 0 0 18px var(--turqui-glow);
+        }
+
+        .btn-flip {
+            border-color: var(--neon-green);
+            color: var(--neon-green);
+            background: rgba(0, 255, 102, 0.1);
+        }
+
+        .btn-flip:hover {
+            background: var(--neon-green);
+            color: #03080e;
+            box-shadow: 0 0 18px var(--neon-green-glow);
+        }
+
+        /* CONTENEDOR TRÍPTICO */
+        .brochure-container {
+            width: 100%;
+            max-width: 1240px;
+            perspective: 1600px;
+            margin-bottom: 30px;
+        }
+
+        .brochure-canvas {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* PANELES INDIVIDUALES */
+        .panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border-panel);
+            border-radius: 12px;
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(8px);
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .panel:hover {
+            border-color: var(--turqui-blue);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0, 229, 255, 0.18);
+        }
+
+        .panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--turqui-blue), var(--neon-green));
+        }
+
+        .panel-header {
+            margin-bottom: 16px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+        }
+
+        .panel-num {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+            color: var(--neon-green);
+            letter-spacing: 1px;
+        }
+
+        .panel-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.15rem;
+            color: #ffffff;
+            margin-top: 4px;
+        }
+
+        .topic-card {
+            background: rgba(4, 12, 20, 0.7);
+            border: 1px solid rgba(0, 229, 255, 0.15);
+            border-radius: 8px;
+            padding: 14px;
+            margin-bottom: 14px;
+            transition: all 0.25s ease;
+        }
+
+        .topic-card:hover {
+            border-color: var(--neon-green);
+            background: rgba(0, 255, 102, 0.04);
+        }
+
+        .topic-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--turqui-blue);
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .topic-card h4 {
+            font-size: 1rem;
+            color: #ffffff;
+            margin-bottom: 6px;
+        }
+
+        .topic-card p {
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            line-height: 1.45;
+        }
+
+        .topic-card ul {
+            margin-left: 18px;
+            margin-top: 6px;
+            color: var(--text-muted);
+            font-size: 0.88rem;
+        }
+
+        .topic-card li {
+            margin-bottom: 4px;
+        }
+
+        .highlight-green {
+            color: var(--neon-green);
+            font-weight: 600;
+        }
+
+        .highlight-blue {
+            color: var(--turqui-blue);
+            font-weight: 600;
+        }
+
+        /* ACORDEÓN INTERACTIVO */
+        .expand-btn {
+            margin-top: 8px;
+            background: transparent;
+            border: 1px solid rgba(0, 255, 102, 0.3);
+            color: var(--neon-green);
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s;
+        }
+
+        .expand-btn:hover {
+            background: rgba(0, 255, 102, 0.15);
+        }
+
+        .extra-detail {
+            display: none;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 0.85rem;
+            color: #b8c7db;
+        }
+
+        /* PORTADA ESTILO POLICIAL */
+        .cover-panel {
+            text-align: center;
+            justify-content: center;
+            background: linear-gradient(180deg, rgba(12, 26, 42, 0.95) 0%, rgba(5, 14, 24, 0.98) 100%);
+            border: 1px solid var(--neon-green);
+            box-shadow: 0 0 30px rgba(0, 255, 102, 0.15);
+        }
+
+        .shield-svg {
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 16px;
+            filter: drop-shadow(0 0 12px var(--neon-green-glow));
+        }
+
+        .cover-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            line-height: 1.25;
+            color: #ffffff;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .cover-subtitle {
+            color: var(--turqui-blue);
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        .meta-box {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 0.85rem;
+            text-align: left;
+            line-height: 1.5;
+        }
+
+        .meta-box p strong {
+            color: var(--neon-green);
+        }
+
+        /* ICONOS SVG */
+        .icon-mini {
+            width: 16px;
+            height: 16px;
+            vertical-align: middle;
+            fill: currentColor;
+        }
+
+        /* SECCIÓN DE SIMULADOR / TEST INTERACTIVO */
+        .quiz-section {
+            width: 100%;
+            max-width: 1240px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-accent);
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 10px;
+            box-shadow: 0 0 25px rgba(0, 255, 102, 0.1);
+        }
+
+        .quiz-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            color: var(--neon-green);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quiz-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 16px;
+        }
+
+        .quiz-item {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 14px;
+        }
+
+        .quiz-question {
+            font-size: 0.95rem;
+            color: #ffffff;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .quiz-options button {
+            width: 100%;
+            text-align: left;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            color: var(--text-muted);
+            padding: 8px 12px;
+            margin-bottom: 6px;
+            border-radius: 6px;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.88rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .quiz-options button:hover {
+            border-color: var(--turqui-blue);
+            color: #ffffff;
+            background: rgba(0, 229, 255, 0.08);
+        }
+
+        .quiz-feedback {
+            font-size: 0.85rem;
+            margin-top: 6px;
+            font-weight: 700;
+            display: none;
+        }
+
+        /* FOOTER */
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            max-width: 800px;
+        }
+
+        footer a {
+            color: var(--turqui-blue);
+            text-decoration: none;
+        }
+
+        @media (max-width: 900px) {
+            .brochure-canvas {
+                grid-template-columns: 1fr;
+            }
+
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ENCABEZADO Y CONTROLES -->
+    <header>
+        <div>
+            <span class="badge-course">Policía Nacional de Colombia • Dirección Nacional de Escuelas</span>
+            <h1>Habilidades de Poder <span>• Liderazgo Policial</span></h1>
+            <p class="docente-tag">Asignatura: <strong>Habilidades de Poder para el Liderazgo Organizacional</strong> |
+                Docente: <strong>Nancy Yaneth Niño Silva</strong></p>
+        </div>
+        <div class="nav-buttons">
+            <button class="btn-action active" id="btnSideOuter" onclick="switchSide('outer')">Caras Exteriores
+                (1-3)</button>
+            <button class="btn-action" id="btnSideInner" onclick="switchSide('inner')">Caras Interiores (4-6)</button>
+            <button class="btn-action btn-flip" onclick="toggleFlip()">🔄 Voltear Tríptico</button>
+        </div>
+    </header>
+
+    <!-- LIENZO DEL TRÍPTICO INTERACTIVO -->
+    <main class="brochure-container">
+        <div class="brochure-canvas" id="canvasView">
+
+            <!-- ==================== VISTA EXTERIOR (POR DEFECTO) ==================== -->
+            <!-- PANEL EXTERIOR 1: SOLAPA INTERIOR (ASPECTOS 1 Y 2) -->
+            <section class="panel outer-panel" data-panel="1">
+                <div>
+                    <div class="panel-header">
+                        <span class="panel-num">PANEL 01 • SOLAPA EXTERIOR</span>
+                        <h3 class="panel-title">Bases y Fuentes del Poder</h3>
+                    </div>
+
+                    <!-- ASPECTO 1 -->
+                    <article class="topic-card">
+                        <div class="topic-tag">
+                            <svg class="icon-mini" viewBox="0 0 24 24" aria-hidden="true">
+                                <path
+                                    d="M12 2L2 7v10c0 5.55 3.84 10.74 10 12 6.16-1.26 10-6.45 10-12V7l-10-5zm0 4.5l6 3v6.5c0 3.75-2.5 7.25-6 8.5-3.5-1.25-6-4.75-6-8.5V9.5l6-3z" />
+                            </svg>
+                            Aspecto 1 • Estructura Conceptual
+                        </div>
+                        <h4>1. Poder vs. Autoridad en el Liderazgo Policial</h4>
+                        <p>Diferencia clave entre <span class="highlight-blue">ejercer el poder</span> e <span
+                                class="highlight-green">imponer la autoridad</span>:</p>
+                        <ul>
+                            <li><strong>Autoridad Formal:</strong> Facultad legal conferida por el grado o cargo para
+                                impartir órdenes legítimas.</li>
+                            <li><strong>Poder del Liderazgo:</strong> Capacidad ética de influir, inspirar y movilizar
+                                la voluntad de los funcionarios sin recurrir a la coacción.</li>
+                        </ul>
+                        <button class="expand-btn" onclick="toggleDetail('detail1')">🔍 Análisis Operacional</button>
+                        <div class="extra-detail" id="detail1">
+                            En el contexto policial, la imposición genera mero acatamiento táctico; el verdadero
+                            liderazgo genera compromiso voluntario y vocación de servicio orientada al ciudadano.
+                        </div>
+                    </article>
+
+                    <!-- ASPECTO 2 -->
+                    <article class="topic-card">
+                        <div class="topic-tag">
+                            <svg class="icon-mini" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                            </svg>
+                            Aspecto 2 • Aplicación Ética
+                        </div>
+                        <h4>2. Poder Legítimo y Poder Experto</h4>
+                        <p>Dimensiones de poder (French y Raven) en los procedimientos policiales:</p>
+                        <ul>
+                            <li><strong>Poder Legítimo:</strong> Respaldado por el marco constitucional y el Código
+                                Nacional de Policía; exige estricto apego al ordenamiento legal.</li>
+                            <li><strong>Poder Experto:</strong> Sustentado en la idoneidad técnica, conocimientos
+                                tácticos, doctrina y competencia profesional del policía.</li>
+                        </ul>
+                        <button class="expand-btn" onclick="toggleDetail('detail2')">🔍 Impacto Ético</button>
+                        <div class="extra-detail" id="detail2">
+                            El uniformado que combina legitimidad con dominio técnico genera credibilidad institucional
+                            inmediata, evitando el uso desproporcionado de la fuerza.
+                        </div>
+                    </article>
+                </div>
+                <div style="font-size: 0.75rem; color: var(--turqui-blue); text-align: center;">Habilidades de Poder •
+                    Policía Nacional</div>
+            </section>
+
+            <!-- PANEL EXTERIOR 2: CONTRAPORTADA (ASPECTOS 8 Y 9) -->
+            <section class="panel outer-panel" data-panel="2">
+                <div>
+                    <div class="panel-header">
+                        <span class="panel-num">PANEL 02 • CONTRAPORTADA</span>
+                        <h3 class="panel-title">Ética, Consecuencias y Cierre</h3>
+                    </div>
+
+                    <!-- ASPECTO 8 -->
+                    <article class="topic-card" style="border-left: 3px solid var(--danger);">
+                        <div class="topic-tag" style="color: var(--danger);">
+                            <svg class="icon-mini" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z" />
+                            </svg>
+                            Aspecto 8 • Riesgos Críticos
+                        </div>
+                        <h4>8. Consecuencias del Mal Uso del Poder</h4>
+                        <p>Impacto institucional y social del descontrol emocional y el abuso:</p>
+                        <ul>
+                            <li><strong>Impacto Institucional:</strong> Ruptura de la disciplina interna, desprestigio
+                                corporativo y sanciones disciplinarias/penales.</li>
+                            <li><strong>Impacto Social:</strong> Destrucción de la confianza comunitaria,
+                                revictimización y vulneración de los Derechos Humanos.</li>
+                        </ul>
+                        <button class="expand-btn" onclick="toggleDetail('detail8')">🔍 Marco Disciplinario</button>
+                        <div class="extra-detail" id="detail8">
+                            La ira y la prepotencia en procedimientos públicos deslegitiman a la institución ante los
+                            ojos de la sociedad civil.
+                        </div>
+                    </article>
+
+                    <!-- ASPECTO 9 -->
+                    <article class="topic-card">
+                        <div class="topic-tag">
+                            <svg class="icon-mini" viewBox="0 0 24 24" aria-hidden="true">
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h2v-6h-2v6zm0-8h2V7h-2v2z" />
+                            </svg>
+                            Aspecto 9 • Cierre Reflexivo
+                        </div>
+                        <h4>9. Conclusión: Liderazgo Ético Policial</h4>
+                        <p>El líder policial contemporáneo no lidera desde el miedo sino desde la <span
+                                class="highlight-green">ejemplaridad moral</span>, la <span
+                                class="highlight-blue">rectitud procesal</span> y la vocación de servicio ciudadano.</p>
+                        <p style="margin-top: 6px; font-size: 0.85rem; font-style: italic;">"La verdadera fuerza del
+                            policía reside en su capacidad para gobernar sus propias emociones y orientar su poder hacia
+                            el bien común."</p>
+                    </article>
+                </div>
+
+                <div class="meta-box" style="margin-top: 12px;">
+                    <p><strong>Referencias Básicas:</strong> Goleman (2014) • Gardner (2005) • UNODC (2011) • Modelo
+                        Holístico de Liderazgo Policial (MHLP).</p>
+                </div>
+            </section>
+
+            <!-- PANEL EXTERIOR 3: PORTADA PRINCIPAL -->
+            <section class="panel outer-panel cover-panel" data-panel="3">
+                <div>
+                    <!-- ESCUDO VECTORIAL NEÓN -->
+                    <svg class="shield-svg" viewBox="0 0 100 100" aria-hidden="true">
+                        <polygon points="50,5 90,20 90,65 50,95 10,65 10,20" fill="none" stroke="#00FF66"
+                            stroke-width="4" />
+                        <polygon points="50,15 80,27 80,60 50,83 20,60 20,27" fill="rgba(0, 229, 255, 0.15)"
+                            stroke="#00E5FF" stroke-width="2" />
+                        <circle cx="50" cy="45" r="14" fill="none" stroke="#00FF66" stroke-width="2" />
+                        <line x1="50" y1="20" x2="50" y2="70" stroke="#00E5FF" stroke-width="2" />
+                        <line x1="28" y1="45" x2="72" y2="45" stroke="#00E5FF" stroke-width="2" />
+                    </svg>
+
+                    <span class="badge-course" style="margin-bottom: 12px;">Actividad de Aprendizaje No. 1 • 30%</span>
+                    <h2 class="cover-title">Habilidades de Poder</h2>
+                    <p class="cover-subtitle">Para el Liderazgo Organizacional Policial</p>
+
+                    <div class="meta-box">
+                        <p><strong>Institución:</strong> Policía Nacional de Colombia</p>
+                        <p><strong>Docente:</strong> Nancy Yaneth Niño Silva</p>
+                        <p><strong>Formato:</strong> Tríptico Digital Interactivo</p>
+                        <p><strong>Propósito:</strong> Pensamiento crítico, ético y estratégico en la gestión policial.
+                        </p>
+                    </div>
+                </div>
+
+                <button class="btn-action" style="margin-top: 20px; width: 100%; justify-content: center;"
+                    onclick="switchSide('inner')">
+                    Abrir Interior del Plegable ➔
+                </button>
+            </section>
+
+            <!-- ==================== VISTA INTERIOR (OCULTA INICIALMENTE) ==================== -->
+            <!-- PANEL INTERIOR 1: (ASPECTOS 3 Y 4) -->
+            <section class="panel inner-panel" data-panel="4" style="display: none;">
+                <div>
+                    <div class="panel-header">
+                        <span class="panel-num">PANEL 04 • INTERIOR IZQUIERDO</span>
+                        <h3 class="panel-title">Inteligencia Emocional y Ciudadanía</h3>
+                    </div>
+
+                    <!-- ASPECTO 3 -->
+                    <article class="topic-card">
+                        <div class="topic-tag">
+                            <svg class="icon-mini" viewBox="0 0 24 24" aria-hidden="true">
+                                <path
+                                    d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                            </svg>
+                            Aspecto 3 • Dominio Propio
+                        </div>
+                        <h4>3. Autocontrol Emocional en Alto Estrés</h4>
+                        <p>Enfrentar disturbios, mediaciones o crisis operativas exige autorregulación psicológica:</p>
+                        <ul>
+                            <li><strong>Respuesta Razonada vs. Reactiva:</strong> Evitar provocaciones ciudadanas y
+                                neutralizar sesgos cognitivos.</li>
+                            <li><strong>Proporcionalidad:</strong> El equilibrio mental garantiza el empleo legal,
+                                racional y necesario de la fuerza.</li>
+                        </ul>
+                        <button class="expand-btn" onclick="toggleDetail('detail3')">🔍 Protocolo de Calma</button>
+                        <div class="extra-detail" id="detail3">
+                            El modelo Goleman destaca que el autocontrol previene el "secuestro amigdalino" en
+                            escenarios de agresión verbal o física.
+                        </div>
+                    </article>
+
+                    <!-- ASPECTO 4 -->
+                    <article class="topic-card">
+                        <div class="topic-tag">
+                            <svg class="icon-mini" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z" />
+                            </svg>
+                            Aspecto 4 • Conexión Social
+                        </div>
+                        <h4>4. Empatía y Confianza Ciudadana</h4>
+                        <p>La inteligencia emocional como puente de legitimidad comunitaria:</p>
+                        <ul>
+                            <li><strong>Escucha Activa:</strong> Comprender las necesidades de la víctima o la comunidad
+                                antes de actuar punitivamente.</li>
+                            <li><strong>Razón Cordial:</strong> Humanizar el uniforme policial para consolidar
+                                corresponsabilidad y seguridad ciudadana.</li>
+                        </ul>
+                    </article>
+                </div>
+                <div style="font-size: 0.75rem; color: var(--neon-green); text-align: center;">Eje Afectivo y Social
+                </div>
+            </section>
+
+            <!-- PANEL INTERIOR 2: (ASPECTO 7 - NÚCLEO INTEGRADOR) -->
+            <section class="panel inner-panel" data-panel="5" style="display: none; border-color: var(--neon-green);">
+                <div>
+                    <div class="panel-header">
+                        <span class="panel-num" style="color: var(--turqui-blue);">PANEL 05 • INTERIOR CENTRAL
+                            (NÚCLEO)</span>
+                        <h3 class="panel-title">Integración Holística de Habilidades</h3>
+                    </div>
+
+                    <!-- ASPECTO 7 -->
+                    <article class="topic-card"
+                        style="background: rgba(0, 255, 102, 0.05); border: 1px solid var(--neon-green);">
+                        <div class="topic-tag" style="color: var(--neon-green);">
+                            <svg class="icon-mini" viewBox="0 0 24 24" aria-hidden="true">
+                                <path
+                                    d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                            </svg>
+                            Aspecto 7 • Síntesis Estratégica
+                        </div>
+                        <h4 style="color: var(--neon-green);">7. Integración de Poder, IE e Inteligencias Múltiples</h4>
+                        <p>¿Cómo articula un líder policial todas sus capacidades con ética?</p>
+
+                        <div style="margin: 10px 0; padding: 10px; background: rgba(0, 0, 0, 0.5); border-radius: 6px;">
+                            <p><strong class="highlight-blue">1. Poder Ético:</strong> Uso de facultades para servir y
+                                proteger, no para privilegios.</p>
+                            <p><strong class="highlight-green">2. Inteligencia Emocional:</strong> Serenidad interna y
+                                empatía hacia subalternos y ciudadanos.</p>
+                            <p><strong class="highlight-blue">3. Inteligencias Múltiples:</strong> Adaptación
+                                estratégica a cada desafío operacional.</p>
+                        </div>
+
+                        <p>El líder policial holístico transforma la autoridad formal en <span
+                                class="highlight-green">poder de referencia</span> mediante el ejemplo cotidiano y la
+                            coherencia doctrinal.</p>
+                        <button class="expand-btn" onclick="toggleDetail('detail7')">🔍 Modelo MHLP</button>
+                        <div class="extra-detail" id="detail7">
+                            El Modelo Holístico de Liderazgo Policial integra el Ser, el Saber y el Saber Hacer,
+                            unificando cultura institucional y calidad en el servicio.
+                        </div>
+                    </article>
+                </div>
+                <div style="font-size: 0.75rem; color: var(--turqui-blue); text-align: center;">Núcleo Central del Líder
+                    Policial</div>
+            </section>
+
+            <!-- PANEL INTERIOR 3: (ASPECTOS 5 Y 6) -->
+            <section class="panel inner-panel" data-panel="6" style="display: none;">
+                <div>
+                    <div class="panel-header">
+                        <span class="panel-num">PANEL 06 • INTERIOR DERECHO</span>
+                        <h3 class="panel-title">Inteligencias Múltiples en la Función Policial</h3>
+                    </div>
+
+                    <!-- ASPECTO 5 -->
+                    <article class="topic-card">
+                        <div class="topic-tag">
+                            <svg class="icon-mini" viewBox="0 0 24 24" aria-hidden="true">
+                                <path
+                                    d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 3s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" />
+                            </svg>
+                            Aspecto 5 • Clima y Disciplina
+                        </div>
+                        <h4>5. Inteligencia Inter e Intrapersonal</h4>
+                        <p>Aportes directos a la doctrina de la Policía Nacional:</p>
+                        <ul>
+                            <li><strong>Intrapersonal (Autoexamen):</strong> Reconocimiento de debilidades, fortaleza
+                                moral y ética incorruptible frente a tentaciones del servicio.</li>
+                            <li><strong>Interpersonal (Liderazgo de Equipo):</strong> Motivación del personal,
+                                resolución asertiva de fricciones internas y disciplina sin autoritarismo.</li>
+                        </ul>
+                    </article>
+
+                    <!-- ASPECTO 6 -->
+                    <article class="topic-card">
+                        <div class="topic-tag">
+                            <svg class="icon-mini" viewBox="0 0 24 24" aria-hidden="true">
+                                <path
+                                    d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 21l3.68-.96C9.46 20.64 10.7 21 12 21c4.97 0 9-4.03 9-9s-4.03-9-9-9z" />
+                            </svg>
+                            Aspecto 6 • Efectividad Táctica
+                        </div>
+                        <h4>6. Inteligencia Lingüística y Corporal</h4>
+                        <p>Herramientas clave para procedimientos policiales transparentes:</p>
+                        <ul>
+                            <li><strong>Lingüística:</strong> Órdenes claras, redacción de informes judiciales e
+                                interrogatorios técnicos respetuosos de la legalidad.</li>
+                            <li><strong>Corporal / Kinesia:</strong> Postura firme, lenguaje no verbal disuasivo y
+                                manejo seguro de elementos de servicio sin transmitir hostilidad.</li>
+                        </ul>
+                    </article>
+                </div>
+                <div style="font-size: 0.75rem; color: var(--neon-green); text-align: center;">Eficacia Operacional y
+                    Procedimental</div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- SECCIÓN INTERACTIVA: AUTOEVALUACIÓN Y SIMULADOR ÉTICO -->
+    <section class="quiz-section">
+        <h3 class="quiz-title">
+            <svg class="icon-mini" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z" />
+            </svg>
+            Simulador Rápido de Criterio Ético Policial (Autoevaluación de Conceptos)
+        </h3>
+        <div class="quiz-grid">
+            <div class="quiz-item">
+                <p class="quiz-question">1. Ante un ciudadano alterado en vía pública, ¿cuál habilidad del líder evita
+                    el abuso de autoridad?</p>
+                <div class="quiz-options">
+                    <button onclick="checkAnswer(this, false, 'fb1')">A) Demostrar superioridad física
+                        inmediata.</button>
+                    <button onclick="checkAnswer(this, true, 'fb1')">B) Autocontrol emocional, empatía y desescalamiento
+                        verbal.</button>
+                    <button onclick="checkAnswer(this, false, 'fb1')">C) Delegar la situación en subalternos.</button>
+                </div>
+                <div class="quiz-feedback" id="fb1"></div>
+            </div>
+
+            <div class="quiz-item">
+                <p class="quiz-question">2. ¿Qué fuente de poder garantiza respeto técnico y voluntario del equipo
+                    policial?</p>
+                <div class="quiz-options">
+                    <button onclick="checkAnswer(this, true, 'fb2')">A) Poder Experto y de Referencia (conocimiento y
+                        ejemplaridad).</button>
+                    <button onclick="checkAnswer(this, false, 'fb2')">B) Poder Coercitivo exclusivamente (castigo y
+                        sanción).</button>
+                    <button onclick="checkAnswer(this, false, 'fb2')">C) La antigüedad en el escalafón sin
+                        preparación.</button>
+                </div>
+                <div class="quiz-feedback" id="fb2"></div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p> <strong>Actividad de Aprendizaje No. 1</strong> (30 %) • Licenciatura / Diplomado
+            en Liderazgo Policial</p>
+        <p style="margin-top: 6px; font-size: 0.8rem; color: #64748b;">
+            Presentado por: <strong>ALEJANDRO REYES LEGUIZAMON</strong> • Dirección de Educación Policial
+            • Policía Nacional de Colombia
+        </p>
+    </footer>
+
+    <!-- SCRIPT DE INTERACTIVIDAD -->
+    <script>
+        let currentSide = 'outer';
+
+        function switchSide(side) {
+            currentSide = side;
+            const outerPanels = document.querySelectorAll('.outer-panel');
+            const innerPanels = document.querySelectorAll('.inner-panel');
+            const btnOuter = document.getElementById('btnSideOuter');
+            const btnInner = document.getElementById('btnSideInner');
+
+            if (side === 'outer') {
+                outerPanels.forEach(p => p.style.display = 'flex');
+                innerPanels.forEach(p => p.style.display = 'none');
+                btnOuter.classList.add('active');
+                btnInner.classList.remove('active');
+            } else {
+                outerPanels.forEach(p => p.style.display = 'none');
+                innerPanels.forEach(p => p.style.display = 'flex');
+                btnInner.classList.add('active');
+                btnOuter.classList.remove('active');
+            }
+        }
+
+        function toggleFlip() {
+            if (currentSide === 'outer') {
+                switchSide('inner');
+            } else {
+                switchSide('outer');
+            }
+        }
+
+        function toggleDetail(id) {
+            const el = document.getElementById(id);
+            if (el.style.display === 'block') {
+                el.style.display = 'none';
+            } else {
+                el.style.display = 'block';
+            }
+        }
+
+        function checkAnswer(button, isCorrect, feedbackId) {
+            const fb = document.getElementById(feedbackId);
+            fb.style.display = 'block';
+
+            if (isCorrect) {
+                button.style.borderColor = 'var(--neon-green)';
+                button.style.background = 'rgba(0, 255, 102, 0.2)';
+                fb.style.color = 'var(--neon-green)';
+                fb.textContent = '¡Correcto! Cumple con los criterios de inteligencia emocional y liderazgo ético.';
+            } else {
+                button.style.borderColor = 'var(--danger)';
+                button.style.background = 'rgba(255, 51, 102, 0.15)';
+                fb.style.color = 'var(--danger)';
+                fb.textContent = 'Incorrecto. Recuerda que la doctrina policial prioriza la resolución pacífica y el dominio técnico.';
+            }
+        }
+    </script>
+</body>
+
+</html>
